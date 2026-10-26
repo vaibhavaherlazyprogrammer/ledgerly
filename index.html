@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ledgerly – Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <section class="auth card" id="auth">
+    <div class="brand">Ledgerly</div>
+    <p>Log in with your email. Your expenses are saved to your account and open on any device.</p>
+    <h2 id="authTitle">Welcome back</h2>
+    <form id="authForm" novalidate>
+      <label>Email
+        <input id="email" type="email" autocomplete="username" placeholder="you@example.com">
+      </label>
+      <label>Password
+        <input id="pw" type="password" autocomplete="current-password" placeholder="At least 6 characters">
+      </label>
+      <div class="err" id="authErr" role="alert"></div>
+      <button class="primary" id="authBtn" type="submit">Log in</button>
+    </form>
+    <button class="link" id="switch" type="button"></button>
+  </section>
+
+  <!-- MAIN APP (hidden until logged in) -->
+  <div class="app" id="app" hidden>
+    <header>
+      <h1>Ledgerly</h1>
+      <div class="month">
+        <button class="icon-btn" id="prev" aria-label="Previous month">‹</button>
+        <span id="monthLabel"></span>
+        <button class="icon-btn" id="next" aria-label="Next month">›</button>
+      </div>
+      <div class="user">
+        <span id="who"></span>
+        <button id="logout" type="button">Log out</button>
+      </div>
+    </header>
+
+    <div class="stack">
+      <section class="card hero">
+        <small>Spent this month</small>
+        <div class="big" id="total">₹0</div>
+        <div class="bar" id="bar"><i style="width:0"></i></div>
+        <div class="budget-row">
+          <span id="budgetText"></span>
+          <button id="editBudget" type="button">Change budget</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Add expense</h2>
+        <form id="form" novalidate>
+          <label>Amount (₹)
+            <input id="amount" type="number" min="1" step="any" inputmode="decimal" placeholder="450">
+          </label>
+          <div class="row2">
+            <label>Category <select id="category"></select></label>
+            <label>Date <input id="date" type="date"></label>
+          </div>
+          <label>Note (optional)
+            <input id="note" type="text" maxlength="60" placeholder="Lunch with Riya">
+          </label>
+          <div class="err" id="err" role="alert"></div>
+          <button class="primary" type="submit">Add expense</button>
+        </form>
+      </section>
+    </div>
+
+    <div class="stack">
+      <section class="card">
+        <h2>Where it went</h2>
+        <div class="insights">
+          <div class="donut">
+            <svg viewBox="0 0 36 36" id="donut"></svg>
+            <div class="c"><b id="dTotal">₹0</b><span>this month</span></div>
+          </div>
+          <div class="legend" id="legend"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="tools">
+          <h2 style="margin:0">Transactions</h2>
+          <button id="export" type="button">Download CSV</button>
+        </div>
+        <div class="filters">
+          <input id="search" type="search" placeholder="Search notes" aria-label="Search notes">
+          <select id="fcat" aria-label="Filter by category"></select>
+        </div>
+        <div class="list" id="list"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Supabase library, then our files. The ORDER matters. -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/db.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
